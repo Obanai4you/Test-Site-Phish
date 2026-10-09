@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Minimal</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #111111;
+            --white: #ffffff;
+            --gray: #777777;
+            --light-gray: #eeeeee;
+            --background: #f7f7f7;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== BACKGROUND LETTERS ===== */
+        .background-text {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            user-select: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .background-text span {
+            font-size: clamp(180px, 32vw, 430px);
+            font-weight: 800;
+            letter-spacing: -25px;
+            color: rgba(0, 0, 0, 0.035);
+            white-space: nowrap;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .login-box {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 590px;
+            display: grid;
+            grid-template-columns: 1fr 0.85fr;
+            background: var(--white);
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.07);
+        }
+
+        /* ===== LEFT SIDE ===== */
+        .column {
+            padding: 65px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 55px;
+        }
+
+        .brand span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--black);
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .column h1 {
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        /* ===== FORM ===== */
+        .login-items {
+            margin-bottom: 22px;
+        }
+
+        .login-items label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .login-element {
+            width: 100%;
+            height: 49px;
+            padding: 0 15px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--black);
+            background: var(--white);
+            border: 1px solid #dddddd;
+            border-radius: 7px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .login-element::placeholder {
+            color: #aaaaaa;
+        }
+
+        .login-element:focus {
+            border-color: var(--black);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ===== REMEMBER AND FORGOT ===== */
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 3px 0 27px;
+        }
+
+        .remember-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #555555;
+            cursor: pointer;
+        }
+
+        .remember-label input {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--black);
+            cursor: pointer;
+        }
+
+        a {
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .forgot-link {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .forgot-link:hover,
+        .signup-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== BUTTONS ===== */
+        .login-button {
+            width: 100%;
+            height: 49px;
+            border: 1px solid var(--black);
+            border-radius: 7px;
+            background: var(--black);
+            color: var(--white);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .login-button:hover {
+            background: #333333;
+        }
+
+        .login-button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid #555555;
+            outline-offset: 3px;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 28px 0 20px;
+            color: #999999;
+            font-size: 11px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--light-gray);
+        }
+
+        /* ===== SOCIAL ICONS ===== */
+        .social-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-buttons a {
+            flex: 1;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #dddddd;
+            border-radius: 7px;
+            color: var(--black);
+            font-size: 17px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .social-buttons a:hover {
+            background: #f3f3f3;
+            border-color: #999999;
+        }
+
+        /* ===== FEEDBACK MESSAGE ===== */
+        #message {
+            display: none;
+            padding: 12px;
+            margin-top: 18px;
+            font-size: 12px;
+            line-height: 1.6;
+            border-radius: 6px;
+        }
+
+        #message.error {
+            display: block;
+            color: #222222;
+            background: #f0f0f0;
+            border-left: 3px solid #111111;
+        }
+
+        #message.success {
+            display: block;
+            color: #111111;
+            background: #eeeeee;
+            border-left: 3px solid #555555;
+        }
+
+        /* ===== RIGHT SIDE ===== */
+        .column2 {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 45px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .panel-top {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #aaaaaa;
+        }
+
+        .panel-content {
+            position: relative;
+            z-index: 1;
+            margin: auto 0;
+        }
+
+        .column2 h2 {
+            font-size: clamp(35px, 4vw, 52px);
+            font-weight: 700;
+            line-height: 1.12;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .column2 p {
+            max-width: 300px;
+            font-size: 13px;
+            line-height: 1.9;
+            color: #bdbdbd;
+            margin-bottom: 30px;
+        }
+
+        .signup-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #777777;
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .signup-link i {
+            transition: transform 0.2s;
+        }
+
+        .signup-link:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Decorative letters on the black panel */
+        .panel-letter {
+            position: absolute;
+            right: -35px;
+            bottom: 60px;
+            font-size: 280px;
+            font-weight: 800;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.045);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .panel-bottom {
+            position: relative;
+            z-index: 1;
+            color: #777777;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 760px) {
+            body {
+                padding: 18px;
+            }
+
+            .login-box {
+                max-width: 480px;
+                grid-template-columns: 1fr;
+            }
+
+            .column {
+                padding: 40px 30px;
+            }
+
+            .brand {
+                margin-bottom: 35px;
+            }
+
+            .column h1 {
+                font-size: 32px;
+            }
+
+            .column2 {
+                min-height: 320px;
+                padding: 32px;
+            }
+
+            .column2 h2 {
+                font-size: 38px;
+            }
+
+            .panel-letter {
+                font-size: 190px;
+                bottom: 30px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .column {
+                padding: 30px 20px;
+            }
+
+            .column2 {
+                padding: 25px 20px;
+            }
+
+            .form-options {
+                align-items: flex-start;
+            }
+
+            .forgot-link,
+            .remember-label {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Large background watermark -->
+    <div class="background-text" aria-hidden="true">
+        <span>LOGIN</span>
+    </div>
+
+    <main class="login-box">
+
+        <!-- Login Form -->
+        <section class="column">
+
+            <div class="brand">
+                <span></span> MINIMAL.
+            </div>
+
+            <h1>Welcome back.</h1>
+            <p class="subtitle">
+                Enter your details below to access your account.
+            </p>
+
+            <form id="loginForm">
+
+                <div class="login-items">
+                    <label for="username">Email or username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        class="login-element"
+                        placeholder="name@example.com"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="login-items">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        class="login-element"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-label" for="remember">
+                        <input type="checkbox" id="remember">
+                        Remember me
+                    </label>
+
+                    <a href="#" class="forgot-link" id="resetPassword">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button type="submit" class="login-button">
+                    Sign In
+                </button>
+
+            </form>
+
+            <div class="divider">OR CONTINUE WITH</div>
+
+            <div class="social-buttons">
+                <a href="#" aria-label="Google" title="Google">
+                    <i class="fa-brands fa-google"></i>
+                </a>
+
+                <a href="#" aria-label="Facebook" title="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+                <a href="#" aria-label="Twitter" title="Twitter">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+
+                <a href="#" aria-label="GitHub" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+
+            <div id="message" role="status" aria-live="polite"></div>
+
+        </section>
+
+        <!-- Welcome Panel -->
+        <section class="column2">
+
+            <div class="panel-top">A BETTER WAY TO SIGN IN</div>
+
+            <div class="panel-content">
+                <h2>Make room<br>for what<br>matters.</h2>
+
+                <p>
+                    Simple, thoughtful, and designed to keep your
+                    experience clear and focused.
+                </p>
+
+                <a href="#" class="signup-link" id="signUp">
+                    Create an account
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="panel-letter" aria-hidden="true">M</div>
+
+            <div class="panel-bottom">
+                SIMPLE DESIGN. CLEAR PURPOSE.
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // Select the required HTML elements
+        const loginForm = document.getElementById("loginForm");
+        const username = document.getElementById("username");
+        const password = document.getElementById("password");
+        const remember = document.getElementById("remember");
+        const message = document.getElementById("message");
+
+        // Display a message
+        function showMessage(text, type) {
+            message.textContent = text;
+            message.className = type;
+        }
+
+        // Basic front-end form validation
+        loginForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const user = username.value.trim();
+            const pass = password.value;
+
+            if (user === "" || pass.trim() === "") {
+                showMessage(
+                    "Please fill in both fields.",
+                    "error"
+                );
+                return;
+            }
+
+            if (pass.length < 6) {
+                showMessage(
+                    "Your password must contain at least 6 characters.",
+                    "error"
+                );
+                return;
+            }
+
+            // Demo only: this does not authenticate a real account.
+            if (remember.checked) {
+                showMessage(
+                    "Form validation complete. Real sign-in is not connected yet.",
+                    "success"
+                );
+            } else {
+                showMessage(
+                    "Form validation complete. Real sign-in is not connected yet.",
+                    "success"
+                );
+            }
+        });
+
+        // Forgot password link
+        document.getElementById("resetPassword")
+            .addEventListener("click", function(event) {
+                event.preventDefault();
+
+                showMessage(
+                    "Password recovery is not configured yet.",
+                    "error"
+                );
+            });
+
+        // Create account link
+        document.getElementById("signUp")
+            .addEventListener("click", function(event) {
+                event.preventDefault();
+
+                showMessage(
+                    "Registration is not configured yet.",
+                    "error"
+                );
+            });
+
+        // Clear old messages when the form changes
+        loginForm.addEventListener("input", function() {
+            message.textContent = "";
+            message.className = "";
+        });
+    </script>
+
+</body>
+</html>
+```
